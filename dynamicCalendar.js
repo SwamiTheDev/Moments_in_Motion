@@ -420,6 +420,79 @@
 
     return result;
   }
+  /**
+   * this function will handle the on click event.
+   */
+  function onClick() {
+    document.body.onclick = function (e) {
+      //get event object (window.event for IE compatibility)
+      e = global.event || e;
 
+      var //get target dom object reference
+        targetDomObject = e.target || e.srcElement,
+        //other variables
+        date,
+        month,
+        year,
+        btn,
+        option,
+        dateObj;
+
+      //prev-next button click
+      //extra checks to make sure object exists and contains the class of interest
+      if (
+        targetDomObject &&
+        targetDomObject.classList &&
+        targetDomObject.classList.contains("dycalendar-prev-next-btn")
+      ) {
+        date = parseInt(targetDomObject.getAttribute("data-date"));
+        month = parseInt(targetDomObject.getAttribute("data-month"));
+        year = parseInt(targetDomObject.getAttribute("data-year"));
+        btn = targetDomObject.getAttribute("data-btn");
+        option = JSON.parse(
+          targetDomObject.parentElement.getAttribute("data-option")
+        );
+
+        if (btn === "prev") {
+          month = month - 1;
+          if (month < 0) {
+            year = year - 1;
+            month = 11;
+          }
+        } else if (btn === "next") {
+          month = month + 1;
+          if (month > 11) {
+            year = year + 1;
+            month = 0;
+          }
+        }
+
+        option.date = date;
+        option.month = month;
+        option.year = year;
+
+        drawCalendar(option);
+      }
+
+      //month click
+      //extra checks to make sure object exists and contains the class of interest
+      if (
+        targetDomObject &&
+        targetDomObject.classList &&
+        targetDomObject.classList.contains("dycalendar-span-month-year")
+      ) {
+        option = JSON.parse(
+          targetDomObject.parentElement.getAttribute("data-option")
+        );
+        dateObj = new Date();
+
+        option.date = dateObj.getDate();
+        option.month = dateObj.getMonth();
+        option.year = dateObj.getFullYear();
+
+        drawCalendar(option);
+      }
+    };
+  }
 
     })  
