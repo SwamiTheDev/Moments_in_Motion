@@ -495,4 +495,53 @@
     };
   }
 
+    //------------------------------ dycalendar.draw() ----------------------
+
+  /**
+   * this function will draw the calendar based on user preferences.
+   *
+   * option = {
+   *  target : "#id|.class"   //(mandatory) for id use #id | for class use .class
+   *  type : "calendar-type"  //(optional) values: "day|month" (default "day")
+   *  month : "integer"       //(optional) value 0-11, where 0 = January, ... 11 = December (default current month)
+   *  year : "integer"        //(optional) example 1990. (default current year)
+   *  date : "integer"        //(optional) example 1-31. (default current date)
+   *  monthformat : "full"    //(optional) values: "mmm|full" (default "full")
+   *  dayformat : "full"      //(optional) values: "ddd|full" (default "full")
+   *  highlighttoday : boolean    //(optional) (default false) if true will highlight today's date
+   *  highlighttargetdate : boolean   //(optional) (default false) if true will highlight targeted date of the month year
+   *  prevnextbutton : "hide"         //(optional) (default "hide") (values: "show|hide") if set to "show" it will show the nav button (prev|next)
+   * }
+   *
+   * @param object option     user preferences
+   * @return boolean          true if success, false otherwise
+   */
+  dycalendar.draw = function (option) {
+    //check if option is passed or not
+    if (typeof option === "undefined") {
+      global.console.error("Option missing");
+      return false;
+    }
+
+    var self = this, //pointing at dycalendar object
+      dateObj = new Date(),
+      //default settings
+      defaults = {
+        type: "day",
+        month: dateObj.getMonth(),
+        year: dateObj.getFullYear(),
+        date: dateObj.getDate(),
+        monthformat: "full",
+        dayformat: "full",
+        highlighttoday: false,
+        highlighttargetdate: false,
+        prevnextbutton: "hide",
+      };
+
+    //extend user options with predefined options
+    option = extendSource(option, defaults);
+
+    drawCalendar(option);
+  };
+
     })  
