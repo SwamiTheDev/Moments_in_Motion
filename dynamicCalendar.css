@@ -340,4 +340,22 @@
   }
   
   /*================================== DYCALENDAR SHADOW ENDS HERE ===========*/
-  
+ 
+@media only screen and (max-width: 600px) {
+  span.dycalendar-span-month-year{
+      font-size: 16px !important;
+  }
+  td{
+       font-size: 13px !important;
+  }
+  #dycalendar{
+      padding: none !important;
+  }
+  span.dycalendar-prev-next-btn.prev-btn{
+      padding: 5px !important;
+  }
+  #dycalendar table td{
+      font-size: 10px !important;
+      padding: 8px;
+  }
+}
