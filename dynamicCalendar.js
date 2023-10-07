@@ -543,5 +543,68 @@
 
     drawCalendar(option);
   };
+   //------------------------------ dycalendar.draw() ends here ------------
+
+  /**
+   * this function will draw the calendar inside the target container.
+   */
+  function drawCalendar(option) {
+    var //variables for creating calendar
+      calendar,
+      calendarHTML,
+      targetedElementBy = "id",
+      targetElem,
+      //other variables
+      i,
+      len,
+      elemArr;
+
+    //find target element by
+    if (option.target[0] === "#") {
+      targetedElementBy = "id";
+    } else if (option.target[0] === ".") {
+      targetedElementBy = "class";
+    }
+    targetElem = option.target.substring(1);
+
+    //get calendar HTML
+    switch (option.type) {
+      case "day":
+        //get calendar detail
+        calendar = getCalendar(option.year, option.month, option.date);
+        //get calendar html
+        calendarHTML = drawCalendarDay(calendar, option);
+        break;
+
+      case "month":
+        //get calendar detail
+        calendar = getCalendar(option.year, option.month, option.date);
+        //get calendar html
+        calendarHTML = drawCalendarMonthTable(calendar, option);
+        break;
+
+      default:
+        global.console.error("Invalid type");
+        return false;
+    }
+
+    //draw calendar
+    if (targetedElementBy === "id") {
+      document.getElementById(targetElem).innerHTML = calendarHTML.outerHTML;
+    } else if (targetedElementBy === "class") {
+      elemArr = document.getElementsByClassName(targetElem);
+      for (i = 0, len = elemArr.length; i < len; i = i + 1) {
+        elemArr[i].innerHTML = calendarHTML.outerHTML;
+      }
+    }
+  }
+
+  //events
+  onClick();
+
+  //attach to global window object
+  global.dycalendar = dycalendar;
+})(typeof window !== "undefined" ? window : this);
+
 
     })  
